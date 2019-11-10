@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!--_header 作为公共模版分离出去-->
 <header class="navbar-wrapper">
     <div class="navbar navbar-fixed-top">
@@ -13,8 +12,10 @@
             <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
                 <ul class="cl">
                     <%--<li>超级管理员</li>--%>
-                    <li class="dropDown dropDown_hover"><a href="#" class="dropDown_A" id="userInfo">用户11<i
-                            class="Hui-iconfont">&#xe6d5;</i></a>
+                    <li class="dropDown dropDown_hover">
+                        <a href="#" class="dropDown_A" id="userInfo">
+
+                        </a>
                         <ul class="dropDown-menu menu radius box-shadow">
                             <li><a href="#" id="logout">退出</a></li>
                         </ul>
