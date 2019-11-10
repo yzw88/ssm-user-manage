@@ -13,6 +13,7 @@ import pers.can.manage.service.SysUserService;
 import pers.can.manage.util.*;
 import pers.can.manage.web.user.input.LoginReq;
 import pers.can.manage.web.user.input.PageUserQueryReq;
+import pers.can.manage.web.user.input.UserEditReq;
 import pers.can.manage.web.user.output.ImgValidCodeResp;
 import pers.can.manage.web.user.output.UserLoginResp;
 
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -138,5 +140,57 @@ public class UserController {
         List<SysUser> sysUserList = this.sysUserService.listPageUser(pageUserQueryReq);
 
         return ResultUtil.getPageRespResult(sysUserList);
+    }
+
+
+    @PostMapping("/editUser")
+    @ValidateAnnotation
+    public Object editUser(@RequestBody @Valid UserEditReq userEditReq) {
+        log.info("编辑用户:username={}", userEditReq.getUsername());
+
+        // 更新
+        if (userEditReq.getUserId() != null) {
+            SysUser sysUser = this.sysUserService.getUserByPrimaryKey(userEditReq.getUserId());
+            if (sysUser == null) {
+                return ResultUtil.getResult(ResultEnum.PARAMETER_ERROR.getCode(), "用户id非法");
+            }
+
+            if (StringUtil.isNotBlank(userEditReq.getUsername())) {
+                SysUser sysUser1 = this.sysUserService.selectByUserName(userEditReq.getUsername());
+                //该用户名已其他用户使用
+                if (sysUser1 != null && !Objects.equals(sysUser.getUserId(), sysUser1.getUserId())) {
+                    return ResultUtil.getResult(ResultEnum.PARAMETER_ERROR.getCode(), "该用户名已有其他用户使用");
+                }
+            }
+
+            sysUser.setUsername(userEditReq.getUsername());
+            sysUser.setMobile(userEditReq.getMobile());
+            sysUser.setEmail(userEditReq.getEmail());
+            sysUser.setStatus(userEditReq.getStatus());
+            this.sysUserService.updateUser(sysUser);
+
+            return ResultUtil.getResult(ResultEnum.SUCCESS);
+        }
+        //插入
+        SysUser sysUser2 = this.sysUserService.selectByUserName(userEditReq.getUsername());
+        if (sysUser2 != null) {
+            return ResultUtil.getResult(ResultEnum.PARAMETER_ERROR.getCode(), "该用户名已有其他用户使用");
+        }
+        sysUser2 = new SysUser();
+        sysUser2.setCreateTime(new Date());
+        sysUser2.setUsername(userEditReq.getUsername());
+        sysUser2.setMobile(userEditReq.getMobile());
+        sysUser2.setEmail(userEditReq.getEmail());
+        sysUser2.setStatus(userEditReq.getStatus());
+        String salt = "123456";
+        String password = "123456";
+        sysUser2.setSalt(salt);
+        sysUser2.setStatus(UserStatusEnum.ENABLE.getCode());
+
+        String password2 = Md5Util.md5To16Encrypt(salt + password);
+        sysUser2.setPassword(password2);
+        this.sysUserService.insertUser(sysUser2);
+
+        return ResultUtil.getResult(ResultEnum.SUCCESS);
     }
 }

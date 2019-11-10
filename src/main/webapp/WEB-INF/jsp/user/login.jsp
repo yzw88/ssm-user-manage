@@ -58,64 +58,65 @@
 <script type="text/javascript" src="${path}/static/H-ui/lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="${path}/static/H-ui/common/ajax.js"></script>
 <script>
-    //定义验证码key
-    var codeKey;
-
-    //登录方法
-    function login() {
-        var username = $("#username").val();
-        var password = $("#password").val();
-        var imgCode = $("#imgCode").val();
-        if (username === '') {
-            layer.msg('请输入用户名', {icon: '-1', time: 1000});
-            $("#userName").focus();
-            return;
-        }
-        if (password === '') {
-            layer.msg('请输入密码', {icon: '-1', time: 1000});
-            $("#password").focus();
-            return;
-        }
-        if (imgCode === '') {
-            layer.msg('请输入验证码', {icon: '-1', time: 1000});
-            $("#imgCode").focus();
-            return;
-        }
-
-        var loginReq = {};
-        loginReq.codeKey = codeKey;
-        loginReq.username = username;
-        loginReq.password = password;
-        loginReq.imgCode = imgCode;
-
-        sendPostAjax('${path}/user/login', loginReq, toIndexCallBack);
-    }
-
-    //登录成功跳转主页方法
-    function toIndexCallBack(result) {
-        //把相关信息保存到localStorage
-        var userLoginResp = result.data;
-        var userInfoJson = JSON.stringify(userLoginResp);
-        window.localStorage.setItem("userInfo", userInfoJson);
-
-        //从定向到主页
-        location.href = '${path}/view/user/index';
-    }
-
-    //图形验证码回调
-    var codeCallBack = function codeCallBack(result) {
-        var base64Code = result.data.base64Code;
-        codeKey = result.data.codeKey;
-        $("#validCode").attr("src", base64Code);
-    };
-
-    //获取图形验证码
-    function getValidCode() {
-        sendGetAjax('${path}/user/getUserValidCode', null, codeCallBack);
-    }
 
     //打开页面执行
     $(function () {
+
+        //定义验证码key
+        var codeKey;
+
+        //登录方法
+        function login() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var imgCode = $("#imgCode").val();
+            if (username === '') {
+                layer.msg('请输入用户名', {icon: '-1', time: 1000});
+                $("#username").focus();
+                return;
+            }
+            if (password === '') {
+                layer.msg('请输入密码', {icon: '-1', time: 1000});
+                $("#password").focus();
+                return;
+            }
+            if (imgCode === '') {
+                layer.msg('请输入验证码', {icon: '-1', time: 1000});
+                $("#imgCode").focus();
+                return;
+            }
+
+            var loginReq = {};
+            loginReq.codeKey = codeKey;
+            loginReq.username = username;
+            loginReq.password = password;
+            loginReq.imgCode = imgCode;
+
+            sendPostAjax('${path}/user/login', loginReq, toIndexCallBack);
+        }
+
+        //登录成功跳转主页方法
+        function toIndexCallBack(result) {
+            //把相关信息保存到localStorage
+            var userLoginResp = result.data;
+            var userInfoJson = JSON.stringify(userLoginResp);
+            window.localStorage.setItem("userInfo", userInfoJson);
+
+            //从定向到主页
+            location.href = '${path}/view/user/userList';
+        }
+
+        //图形验证码回调
+        var codeCallBack = function codeCallBack(result) {
+            var base64Code = result.data.base64Code;
+            codeKey = result.data.codeKey;
+            $("#validCode").attr("src", base64Code);
+        };
+
+        //获取图形验证码
+        function getValidCode() {
+            sendGetAjax('${path}/user/getUserValidCode', null, codeCallBack);
+        }
 
         //调用获取图形验证码
         getValidCode();
@@ -129,13 +130,13 @@
         $('#login').click(function () {
             login();
         });
-    });
 
-    //监听键盘事件
-    $(document).keyup(function (event) {
-        if (event.keyCode == 13) {
-            login();
-        }
+        //监听键盘事件
+        $(document).keyup(function (event) {
+            if (event.keyCode == 13) {
+                login();
+            }
+        });
     });
 
 </script>

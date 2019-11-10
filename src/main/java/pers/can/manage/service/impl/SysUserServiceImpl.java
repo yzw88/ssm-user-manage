@@ -2,6 +2,7 @@ package pers.can.manage.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pers.can.manage.common.constant.RedisConstant;
 import pers.can.manage.common.dto.UserTokenDTO;
 import pers.can.manage.dao.SysUserMapper;
@@ -70,5 +71,17 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public List<SysUser> listPageUser(PageUserQueryReq pageUserQueryReq) {
         return this.sysUserMapper.listPageUser(pageUserQueryReq);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int updateUser(SysUser record) {
+        return this.sysUserMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int insertUser(SysUser record) {
+        return this.sysUserMapper.insertSelective(record);
     }
 }

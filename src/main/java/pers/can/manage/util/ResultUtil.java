@@ -100,7 +100,7 @@ public class ResultUtil {
         responseDataDTO.setCode(ResultEnum.SUCCESS.getCode());
         responseDataDTO.setMessage(ResultEnum.SUCCESS.getMsg());
 
-        PageInfo<T> pageInfo = new PageInfo<>(pageList == null || pageList.isEmpty() ? new ArrayList<>() : pageList);
+        PageInfo<T> pageInfo = new PageInfo<>((pageList == null || pageList.isEmpty()) ? new ArrayList<>() : pageList);
         PageResp<T> pageResp = new PageResp<>();
         pageResp.setList(pageInfo.getList());
         pageResp.setTotal(pageInfo.getTotal());

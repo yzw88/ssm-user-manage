@@ -4,10 +4,10 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>角色列表</title>
-    <jsp:include page="../common/top.jsp"></jsp:include>
+    <jsp:include page="../common/top.jsp"/>
 </head>
 <body>
-<jsp:include page="../common/header_menu.jsp"></jsp:include>
+<jsp:include page="../common/header_menu.jsp"/>
 
 <section class="Hui-article-box">
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
@@ -37,7 +37,7 @@
             <div class="cl pd-5 bg-1 bk-gray mt-20">
                 <span class="l">
 
-                    <a href="javascript:;" onclick="add()" class="btn btn-primary radius">
+                    <a href="javascript:;" onclick="addUser()" class="btn btn-primary radius">
                     <i class="Hui-iconfont">&#xe600;</i> 添加用户</a>
                     <%--一个a配一个i--%>
                 </span>
@@ -48,6 +48,7 @@
                     <tr class="text-c">
                         <th width="25"><input type="checkbox" name="" value=""></th>
                         <th width="80" style="display:none">ID</th>
+                        <th width="80">用id</th>
                         <th width="80">用户名</th>
                         <th width="80">手机号码</th>
                         <th width="80">邮箱</th>
@@ -68,7 +69,7 @@
 
 <!--_footer 作为公共模版分离出去-->
 <%--引入尾部js--%>
-<jsp:include page="../common/bottom.jsp"></jsp:include>
+<jsp:include page="../common/bottom.jsp"/>
 <!--/_footer /作为公共模版分离出去-->
 
 
@@ -89,6 +90,7 @@
                     html += ' <tr class="text-c"> '
                     html += ' <td><input type="checkbox" value="' + o.userId + '" name=""></td> '
                     html += ' <td style="display:none">' + o.userId + '</td> '
+                    html += ' <td>' + o.userId + '</td> '
                     html += ' <td>' + o.username + '</td> '
                     html += ' <td>' + o.mobile + '</td> '
                     html += ' <td>' + o.email + '</td> '
@@ -122,29 +124,14 @@
         getDate();
     });
 
-    // 启用
-    function enable(obj) {
-        layer.confirm('确认要启用吗？', function (index) {
-            var userInfo = {};
-            userInfo.userSn = obj;
-            $.ajax({
-                url: '${path}/admin/user/enable',
-                data: JSON.stringify(userInfo),
-                type: 'post',
-                dataType: 'json',
-                async: false,
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                    if (result.code == '0') {
-                        layer.msg(result.msg, {icon: 1, time: 1000});
-                        getDate();
-                    } else {
-                        layer.msg(result.msg, {icon: -1, time: 1000});
-                    }
+    //添加用户
+    function addUser() {
+        layer_show('添加用户信息', '${path}/view/user/userEdit', '800', '600');
+    }
 
-                }
-            });
-        });
+    //更新用户
+    function update(object) {
+        layer_show('添加用户信息', '${path}/view/user/userEdit?userId=' + object, '800', '600');
     }
 
 </script>

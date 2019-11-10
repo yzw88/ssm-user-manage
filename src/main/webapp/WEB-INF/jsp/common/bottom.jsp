@@ -23,3 +23,12 @@
 <script type="text/javascript" src="${path}/static/layui/layui.js"></script>
 <script type="text/javascript" src="${path}/static/H-ui/common/page.js"></script>
 <script type="text/javascript" src="${path}/static/H-ui/common/ajax.js"></script>
+<script>
+    //获取url上的参数
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+</script>

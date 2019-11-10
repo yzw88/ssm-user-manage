@@ -61,6 +61,7 @@
             <mvc:exclude-mapping path="/view/user/index"/>
             <!--用户登录接口-->
             <mvc:exclude-mapping path="/user/login"/>
+            <mvc:exclude-mapping path="/user/editUser"/>
             <!--获取验证码接口-->
             <mvc:exclude-mapping path="/user/getUserValidCode"/>
             <!--获取用户分页数据，测试专用-->

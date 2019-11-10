@@ -44,4 +44,20 @@ public interface SysUserService {
      * @return list
      */
     List<SysUser> listPageUser(PageUserQueryReq pageUserQueryReq);
+
+    /**
+     * 更新用户信息
+     *
+     * @param record 用户model
+     * @return 更新记录数
+     */
+    int updateUser(SysUser record);
+
+    /**
+     * 添加用户
+     *
+     * @param record 用户model
+     * @return 插入记录数
+     */
+    int insertUser(SysUser record);
 }
