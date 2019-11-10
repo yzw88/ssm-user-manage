@@ -1,0 +1,25 @@
+$.ajax({
+                url: '${path}/user/getUserValidCode',
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == '9999') {
+                        var base64Str = result.data.base64Str;
+                        $("#validCode").attr("src", base64Str);
+                    } else {
+                        layer.msg(result.msg, {icon: '-1', time: 1000});
+                    }
+                }
+            });
+
+//用户主页
+http://localhost:8080/view/user/index
+//登录页面
+http://localhost:8080/view/user/login
+#pagehelper不调用startpage依旧执行分页问题处理
+https://blog.csdn.net/yxh13521338301/article/details/83271785
+
+
+-Dfile.encoding=UTF-8
+乱码问题：
+https://blog.csdn.net/loveer0/article/details/82153558

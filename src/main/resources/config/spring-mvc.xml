@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- MVC转换，把前段的值付给对象 -->
+    <mvc:annotation-driven/>
+    <mvc:default-servlet-handler/>
+
+    <!--扫描控制器-->
+    <context:component-scan base-package="pers.can.manage.web.*.controller"/>
+    <!--扫描切面-->
+    <context:component-scan base-package="pers.can.manage.common.aspectj"/>
+    <!--启动注解@aspectJ支持-->
+    <aop:aspectj-autoproxy expose-proxy="true"/>
+
+    <!--json 解释器-->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="false">
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+                <property name="fastJsonConfig" ref="fastJsonConfig"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <!--配置 fastJsonConfig-->
+    <bean id="fastJsonConfig" class="com.alibaba.fastjson.support.config.FastJsonConfig">
+        <property name="charset" value="UTF-8"/>
+    </bean>
+    <!-- 定义跳转的文件的前后缀 ，视图模式配置 -->
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--拦截器的配置-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--拦截的请求-->
+            <mvc:mapping path="/**/**"/>
+            <!--放过的请求-->
+            <!--返回登录页面url-->
+            <mvc:exclude-mapping path="/view/user/login"/>
+            <!--用户列表页面-->
+            <mvc:exclude-mapping path="/view/user/userList"/>
+            <!--用户主页-test-->
+            <mvc:exclude-mapping path="/view/user/index"/>
+            <!--用户登录接口-->
+            <mvc:exclude-mapping path="/user/login"/>
+            <!--获取验证码接口-->
+            <mvc:exclude-mapping path="/user/getUserValidCode"/>
+            <!--获取用户分页数据，测试专用-->
+            <mvc:exclude-mapping path="/user/getUserPageList"/>
+            <bean class="pers.can.manage.common.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+
+    </mvc:interceptors>
+</beans>
+
