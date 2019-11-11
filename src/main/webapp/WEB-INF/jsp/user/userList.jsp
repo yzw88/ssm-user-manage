@@ -7,9 +7,8 @@
     <jsp:include page="../common/top.jsp"/>
 </head>
 <body>
-<jsp:include page="../common/header_menu.jsp"/>
 
-<section class="Hui-article-box">
+<section>
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
         <span class="c-gray en">&gt;</span>
         用户管理
@@ -32,6 +31,7 @@
                     <button class="btn btn-success radius" id="btn_clear" name="btn_clear"><i
                             class="Hui-iconfont">&#xe66b;</i> 清空
                     </button>
+
                 </form>
             </div>
             <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -48,9 +48,9 @@
                     <tr class="text-c">
                         <th width="25"><input type="checkbox" name="" value=""></th>
                         <th width="80" style="display:none">ID</th>
-                        <th width="80">用id</th>
-                        <th width="80">用户名</th>
-                        <th width="80">手机号码</th>
+                        <th width="80px">用id</th>
+                        <th width="80px">用户名</th>
+                        <th width="80px">手机号码</th>
                         <th width="80">邮箱</th>
                         <th width="120">状态</th>
                         <th width="120">操作</th>
@@ -126,13 +126,16 @@
 
     //添加用户
     function addUser() {
-        layer_show('添加用户信息', '${path}/view/user/userEdit', '800', '600');
+        <%--layer_show('添加用户信息', '${path}/view/user/userEdit', '800', '600');--%>
+        // location.href = "https://www.baidu.com/";
+        top.location.href  = "https://www.baidu.com/";
     }
 
     //更新用户
     function update(object) {
         layer_show('添加用户信息', '${path}/view/user/userEdit?userId=' + object, '800', '600');
     }
+
 
 </script>
 <!--/请在上方写此页面业务相关的脚本-->

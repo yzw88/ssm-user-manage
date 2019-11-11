@@ -16,6 +16,8 @@ $.ajax({
 http://localhost:8080/view/user/index
 //登录页面
 http://localhost:8080/view/user/login
+http://localhost:8080/view/user/userList
+http://localhost:8080/view/common/index
 #pagehelper不调用startpage依旧执行分页问题处理
 https://blog.csdn.net/yxh13521338301/article/details/83271785
 

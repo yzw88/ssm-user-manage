@@ -32,11 +32,11 @@
         return null;
     }
 
-    $(function () {
-        var userInfoJson = window.localStorage.getItem('userInfo');
-        //转换对象
-        var userLoginResp = jQuery.parseJSON(userInfoJson);
-        var username = userLoginResp.username;
-        $("#userInfo").text(username);
-    });
+    // $(function () {
+    //     var userInfoJson = window.localStorage.getItem('userInfo');
+    //     //转换对象
+    //     var userLoginResp = jQuery.parseJSON(userInfoJson);
+    //     var username = userLoginResp.username;
+    //     $("#userInfo").text(username);
+    // });
 </script>
