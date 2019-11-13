@@ -1,9 +1,10 @@
 package pers.can.manage.web.user.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pers.can.manage.common.annotation.ValidateAnnotation;
+import pers.can.manage.common.annotation.LogHandleAnnotation;
 import pers.can.manage.common.constant.CommonConstant;
 import pers.can.manage.common.enums.ResultEnum;
 import pers.can.manage.common.enums.UserStatusEnum;
@@ -15,6 +16,7 @@ import pers.can.manage.web.user.input.LoginReq;
 import pers.can.manage.web.user.input.PageUserQueryReq;
 import pers.can.manage.web.user.input.UserEditReq;
 import pers.can.manage.web.user.output.ImgValidCodeResp;
+import pers.can.manage.web.user.output.UserInfoResp;
 import pers.can.manage.web.user.output.UserLoginResp;
 
 import javax.annotation.Resource;
@@ -84,7 +86,7 @@ public class UserController {
      * @return object
      */
     @PostMapping("/login")
-    @ValidateAnnotation
+    @LogHandleAnnotation
     public Object login(@RequestBody @Valid LoginReq loginReq, HttpServletResponse response) {
         log.info("user login:{}", FastJsonUtil.toJson(loginReq));
 
@@ -134,17 +136,24 @@ public class UserController {
      * @return object
      */
     @PostMapping("/getUserPageList")
-    @ValidateAnnotation
+    @LogHandleAnnotation
     public Object getUserPageList(@RequestBody @Valid PageUserQueryReq pageUserQueryReq) {
 
+        log.info("请求数据pageUserQueryReq={}", FastJsonUtil.toJson(pageUserQueryReq));
         List<SysUser> sysUserList = this.sysUserService.listPageUser(pageUserQueryReq);
 
         return ResultUtil.getPageRespResult(sysUserList);
     }
 
 
+    /**
+     * 编辑用户信息
+     *
+     * @param userEditReq 用户编辑传输对象
+     * @return object
+     */
     @PostMapping("/editUser")
-    @ValidateAnnotation
+    @LogHandleAnnotation
     public Object editUser(@RequestBody @Valid UserEditReq userEditReq) {
         log.info("编辑用户:username={}", userEditReq.getUsername());
 
@@ -182,14 +191,93 @@ public class UserController {
         sysUser2.setMobile(userEditReq.getMobile());
         sysUser2.setEmail(userEditReq.getEmail());
         sysUser2.setStatus(userEditReq.getStatus());
-        String salt = "123456";
-        String password = "123456";
-        sysUser2.setSalt(salt);
+        sysUser2.setSalt(RandomStringUtils.randomAlphanumeric(8));
         sysUser2.setStatus(UserStatusEnum.ENABLE.getCode());
 
-        String password2 = Md5Util.md5To16Encrypt(salt + password);
+        String password2 = Md5Util.md5To16Encrypt(sysUser2.getSalt() + CommonConstant.INIT_PASSWORD);
         sysUser2.setPassword(password2);
         this.sysUserService.insertUser(sysUser2);
+
+        return ResultUtil.getResult(ResultEnum.SUCCESS);
+    }
+
+
+    /**
+     * 获取用户信息
+     *
+     * @param userId 用户id
+     * @return object
+     */
+    @GetMapping("/getUserByUserId")
+    @LogHandleAnnotation
+    public Object getUserByUserId(Long userId) {
+
+        if (userId == null || userId < 0) {
+            return ResultUtil.getResult(ResultEnum.PARAMETER_ERROR.getCode(), "用户id非法");
+        }
+
+        SysUser sysUser = this.sysUserService.getUserByPrimaryKey(userId);
+        if (sysUser == null) {
+            return ResultUtil.getResult(ResultEnum.PARAMETER_ERROR.getCode(), "用户不存在");
+        }
+        UserInfoResp userInfoResp = new UserInfoResp();
+        userInfoResp.setUserId(sysUser.getUserId());
+        userInfoResp.setDeptId(sysUser.getDeptId());
+        userInfoResp.setEmail(sysUser.getEmail());
+        userInfoResp.setMobile(sysUser.getMobile());
+
+        userInfoResp.setStatus(sysUser.getStatus());
+        userInfoResp.setUsername(sysUser.getUsername());
+        return ResultUtil.getSuccessResult(userInfoResp);
+    }
+
+    /**
+     * 禁用或者启用用户
+     *
+     * @param userId 用户id
+     * @return object
+     */
+    @GetMapping("/disableOrEnableUser")
+    @LogHandleAnnotation
+    public Object disableOrEnableUser(Long userId) {
+        if (userId == null || userId < 0) {
+            return ResultUtil.getResult(ResultEnum.PARAMETER_ERROR.getCode(), "用户id非法，禁用失败");
+        }
+
+        SysUser sysUser = this.sysUserService.getUserByPrimaryKey(userId);
+        if (sysUser == null) {
+            return ResultUtil.getResult(ResultEnum.PARAMETER_ERROR.getCode(), "用户不存在，禁用失败");
+        }
+        //如果用户状态为启用，则要禁用该用户
+        if (Objects.equals(UserStatusEnum.ENABLE.getCode(), sysUser.getStatus())) {
+            this.sysUserService.updateUserStatus(userId, UserStatusEnum.DISABLE.getCode());
+        } else {
+            this.sysUserService.updateUserStatus(userId, UserStatusEnum.ENABLE.getCode());
+        }
+
+        return ResultUtil.getResult(ResultEnum.SUCCESS);
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param userId 用户id
+     * @return object
+     */
+    @GetMapping("/deleteUserByUserId")
+    @LogHandleAnnotation
+    public Object deleteUserByUserId(Long userId) {
+
+        if (userId == null || userId < 0) {
+            return ResultUtil.getResult(ResultEnum.PARAMETER_ERROR.getCode(), "用户id非法，删除失败");
+        }
+
+        SysUser sysUser = this.sysUserService.getUserByPrimaryKey(userId);
+        if (sysUser == null) {
+            return ResultUtil.getResult(ResultEnum.PARAMETER_ERROR.getCode(), "用户不存在，删除失败");
+        }
+
+        this.sysUserService.deleteUserByUserId(userId);
 
         return ResultUtil.getResult(ResultEnum.SUCCESS);
     }

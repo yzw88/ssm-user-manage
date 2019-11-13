@@ -21,8 +21,8 @@
         <article class="cl pd-20">
             <div class="text-c">
                 <form id="#form1">
-                    用户名：<input type="text" class="input-text" style="width:250px" placeholder="输入昵称" id="userName"
-                               name="userName">
+                    用户名：<input type="text" class="input-text" style="width:250px" placeholder="输入昵称" id="username"
+                               name="username">
                     手机号码：<input type="text" class="input-text" style="width:250px" placeholder="输入手机号码" id="mobile"
                                 name="mobile">
                     <button type="button" class="btn btn-success radius" id="sub" name=""><i
@@ -75,13 +75,6 @@
 
 <%--自己的--%>
 <script type="text/javascript">
-
-    // 改变选中的二级菜单的样式
-    $("#current-user").attr("class", "current-li current").parent().parent().attr("style", "display: block;");
-
-    // 改变一级菜单右上角的图标样式
-    $("#current-user").parent().parent().prev().attr("class", "selected");
-
     function getDate() {
         var insertHtml = function (list) {
             var html = "";
@@ -97,23 +90,24 @@
                     html += ' <td>' + o.status + '</td> '
 
                     html += ' <td class="td-manage"> '
-                    html += ' <a title="编辑" href="javascript:;" onclick="update(' + "'" + o.userId + "'" + ')" class="ml-5" style="text-decoration:none"> '
+                    html += ' <a title="编辑" href="javascript:;" onclick="updateUser(' + "'" + o.userId + "'" + ')" class="ml-5" style="text-decoration:none"> '
                     html += ' <i class="Hui-iconfont">&#xe6df;</i> '
                     html += ' </a> '
-                    html += ' <a style="text-decoration:none" onClick="enable(' + "'" + o.userId + "'" + ')" href="javascript:;" title="启用"> '
-                    html += ' <i class="Hui-iconfont">&#xe601;</i></a> '
-                    html += ' <a style="text-decoration:none" onClick="disable(' + "'" + o.userId + "'" + ')" href="javascript:;" title="停用"> '
-                    html += ' <i class="Hui-iconfont">&#xe631;</i></a> '
-                    html += ' <a title="删除" href="javascript:;" onclick="del(' + "'" + o.userId + "'" + ')" class="ml-5" style="text-decoration:none"> '
-                    html += ' <i class="Hui-iconfont">&#xe6e2;</i> '
-                    html += ' </a> '
+                    html += ' <a style="text-decoration:none" onClick="deleteUser(' + "'" + o.userId + "'" + ')" href="javascript:;" title="删除"> '
+                    html += ' <i class="Hui-iconfont">&#xe6e2;</i></a> '
                     html += ' </td> '
 
                     html += ' </tr> ';
                 });
             return html;
         };
+
+        var username = $("#username").val();
+        var mobile = $("#mobile").val();
         var pageUserQueryReq = {};
+        pageUserQueryReq.username = username;
+        pageUserQueryReq.mobile = mobile;
+
         tableInit('${path}/user/getUserPageList', 10, pageUserQueryReq, insertHtml);
     }
 
@@ -126,16 +120,31 @@
 
     //添加用户
     function addUser() {
-        <%--layer_show('添加用户信息', '${path}/view/user/userEdit', '800', '600');--%>
-        // location.href = "https://www.baidu.com/";
-        top.location.href  = "https://www.baidu.com/";
+        layer_show('添加用户信息', '${path}/view/user/userEdit', '800', '600');
     }
 
     //更新用户
-    function update(object) {
+    function updateUser(object) {
         layer_show('添加用户信息', '${path}/view/user/userEdit?userId=' + object, '800', '600');
     }
 
+    //刷新当前页面
+    function localRefresh() {
+        location.href = "";
+    }
+
+    //用户编辑回调函数
+    var deleteUserCallBack = function userEditCallBack() {
+        layer.msg('删除成功', {icon: '-1', time: 1000});
+        setTimeout(localRefresh, 1000);
+    };
+
+    //删除用户
+    function deleteUser(object) {
+        var userReq = {};
+        userReq.userId = object;
+        sendGetFormDateAjax("${path}/user/deleteUserByUserId", userReq, deleteUserCallBack);
+    }
 
 </script>
 <!--/请在上方写此页面业务相关的脚本-->

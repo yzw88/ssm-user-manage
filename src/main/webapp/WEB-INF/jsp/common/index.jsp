@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="${path}/static/layui/css/layui.css" media="all">
 
     <style>
-        body {margin:0;padding:0;}
+        body {
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 <body>
@@ -58,12 +61,21 @@
 
     <div class="menu_dropdown bk_2">
 
+        <%--dl表示一个菜单--%>
         <dl id="menu-UserList">
-            <%--设置dt  class="selected"表示选中--%>
-            <dt><i class="Hui-iconfont">&#xe62d;</i> 用户管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-            <dd>
+            <%--selected表示选中--%>
+            <dt>
+                <i class="Hui-iconfont selected">&#xe62d;</i>
+                用户管理
+                <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+            </dt>
+            <%--display: block表示展开--%>
+            <dd style="display: block">
                 <ul>
-                    <li class="current-li" id="current-user"><a href="${path}/view/user/userList" title="用户列表">用户列表</a>
+                    <%--current样式表示选中--%>
+                    <li class="current-li current" id="current-user">
+                        <a class="toUrl" href="javascript:void(0)" to-url="${path}/view/user/userList"
+                           title="用户列表">用户列表</a>
                     </li>
                 </ul>
             </dd>
@@ -76,7 +88,8 @@
     <div id="iframe_box">
         <div class="show_iframe">
             <div style="display:none" class="loading"></div>
-            <iframe id="iframe-welcome" data-scrolltop="0" scrolling="yes" frameborder="0" src="${path}/view/user/userList"></iframe>
+            <iframe id="iframe-welcome" data-scrolltop="0" scrolling="yes" frameborder="0"
+                    src=""></iframe>
         </div>
     </div>
 </section>
@@ -106,13 +119,22 @@
         return null;
     }
 
-    // $(function () {
-    //     var userInfoJson = window.localStorage.getItem('userInfo');
-    //     //转换对象
-    //     var userLoginResp = jQuery.parseJSON(userInfoJson);
-    //     var username = userLoginResp.username;
-    //     $("#userInfo").text(username);
-    // });
+    $(function () {
+        var userInfoJson = window.localStorage.getItem('userInfo');
+        //转换对象
+        var userLoginResp = jQuery.parseJSON(userInfoJson);
+        var username = userLoginResp.username;
+        $("#userInfo").text(username);
+
+        var selectUrl = $(".current").find("a").attr("to-url");
+        //打开url
+        $("#iframe-welcome").attr("src", selectUrl);
+
+        $(".toUrl").click(function () {
+            var toUrl = $(this).attr("href");
+            $("#iframe-welcome").attr("src", toUrl);
+        });
+    });
 </script>
 
 </html>

@@ -3,7 +3,7 @@
         _pageNum = 1,
         _pageSize = 10,
         _ajaxUrl,
-        _ajaxJsonData,
+        _ajaxJsonData = {},
         _token = window.localStorage.getItem('AuthorizationToken'),
         _list = {},
         _cb;
@@ -16,7 +16,7 @@
      **/
     function tableInit(url, pageSize, ajaxData, cb) {
         _ajaxUrl = url;
-        _ajaxJsonData = typeof (ajaxData) == "undefined" ? _ajaxJsonData : JSON.stringify(ajaxData);
+        _ajaxJsonData = typeof (ajaxData) == "undefined" ? _ajaxJsonData : ajaxData;
         _pageSize = typeof (pageSize) == "undefined" ? _pageSize : pageSize;
         _cb = cb;
         getFormAjax();
@@ -28,15 +28,11 @@
      *
      */
     function getFormAjax() {
-        var _data = {};
-        _data.pageNum = _pageNum;
-        _data.pageSize = _pageSize;
-        //合并对象，修改第一个对象
-        $.extend(_data, _ajaxJsonData);
-
+        _ajaxJsonData.pageNum = _pageNum;
+        _ajaxJsonData.pageSize = _pageSize;
         $.ajax({
             url: _ajaxUrl,
-            data: JSON.stringify(_data),
+            data: JSON.stringify(_ajaxJsonData),
             contentType: "application/json;charset=utf-8",
             type: 'post',
             dataType: 'json',
@@ -49,7 +45,7 @@
                 if (result.code === 1000) {
                     layer.msg(result.message, {icon: '-1', time: 1000});
                     //从定向到登录页面
-                    location.href = "${path}/view/user/login";
+                    top.location.href = "${path}/view/user/login";
                     return;
                 }
                 //响应头部处理

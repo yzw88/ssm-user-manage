@@ -48,27 +48,22 @@
     </bean>
 
     <!--拦截器的配置-->
-    <!--<mvc:interceptors>
+    <mvc:interceptors>
         <mvc:interceptor>
-            &lt;!&ndash;拦截的请求&ndash;&gt;
+            <!--拦截的请求-->
             <mvc:mapping path="/**/**"/>
-            &lt;!&ndash;放过的请求&ndash;&gt;
-            &lt;!&ndash;返回登录页面url&ndash;&gt;
+            <!--放过的请求-->
+            <!--返回登录页面url-->
             <mvc:exclude-mapping path="/view/user/login"/>
-            &lt;!&ndash;用户列表页面&ndash;&gt;
-            <mvc:exclude-mapping path="/view/user/userList"/>
-            &lt;!&ndash;用户主页-test&ndash;&gt;
+            <!--用户主页-test-->
             <mvc:exclude-mapping path="/view/user/index"/>
-            &lt;!&ndash;用户登录接口&ndash;&gt;
+            <!--用户登录接口-->
             <mvc:exclude-mapping path="/user/login"/>
-            <mvc:exclude-mapping path="/user/editUser"/>
-            &lt;!&ndash;获取验证码接口&ndash;&gt;
+            <!--获取验证码接口-->
             <mvc:exclude-mapping path="/user/getUserValidCode"/>
-            &lt;!&ndash;获取用户分页数据，测试专用&ndash;&gt;
-            <mvc:exclude-mapping path="/user/getUserPageList"/>
             <bean class="pers.can.manage.common.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
 
-    </mvc:interceptors>-->
+    </mvc:interceptors>
 </beans>
 

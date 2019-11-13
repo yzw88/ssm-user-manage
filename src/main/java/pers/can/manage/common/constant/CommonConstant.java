@@ -18,4 +18,13 @@ public class CommonConstant {
      */
     public static final String KEY_USER_TOKEN = "AuthorizationToken";
 
+    /**
+     * 初始化盐值
+     */
+    public static final String INIT_SALT = "123456";
+
+    /**
+     * 初始化密码
+     */
+    public static final String INIT_PASSWORD = "123456";
 }

@@ -3,17 +3,19 @@
         _ajaxJsonData = {},
         //从localStorage中获取token
         _token = window.localStorage.getItem('AuthorizationToken'),
+        _contentType,
         _cb;
 
     /**
-     * get ajax请求
+     * get ajax表单提交请求
      * @param url 请求url
      * @param ajaxData 请求数据(非json格式字符串，使用对象格式)
      * @param cb 回调函数
      */
-    function sendGetAjax(url, ajaxData, cb) {
+    function sendGetFormDateAjax(url, ajaxData, cb) {
         _ajaxUrl = url;
-        _ajaxJsonData = typeof (ajaxData) == "undefined" ? _ajaxJsonData : JSON.stringify(ajaxData);
+        _ajaxJsonData = ajaxData;
+        _contentType = "multipart/form-data";
         _cb = cb;
         sendAjax('get');
     }
@@ -28,6 +30,7 @@
         _ajaxUrl = url;
         _ajaxJsonData = typeof (ajaxData) == "undefined" ? _ajaxJsonData : JSON.stringify(ajaxData);
         _cb = cb;
+        _contentType = "application/json;charset=utf-8";
         sendAjax('post');
     }
 
@@ -39,7 +42,7 @@
         $.ajax({
             url: _ajaxUrl,
             data: _ajaxJsonData,
-            contentType: "application/json;charset=utf-8",
+            contentType: _contentType,
             type: type,
             dataType: 'json',
             beforeSend: function (request) {
@@ -51,7 +54,7 @@
                 if (result.code === 1000) {
                     layer.msg(result.message, {icon: '-1', time: 1000});
                     //从定向到登录页面
-                    location.href = "${path}/view/user/login";
+                    top.location.href = "${path}/view/user/login";
                     return;
                 }
                 //响应头部处理
@@ -77,6 +80,6 @@
         });
     }
 
-    window.sendGetAjax = sendGetAjax;
+    window.sendGetFormDateAjax = sendGetFormDateAjax;
     window.sendPostAjax = sendPostAjax;
 }(jQuery));

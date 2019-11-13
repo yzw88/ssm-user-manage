@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import pers.can.manage.common.annotation.ValidateAnnotation;
+import pers.can.manage.common.annotation.LogHandleAnnotation;
 import pers.can.manage.common.enums.ResultEnum;
 import pers.can.manage.util.RedisUtil;
 import pers.can.manage.util.ResultUtil;
@@ -56,7 +56,7 @@ public class CheckController {
     }
 
     @PostMapping("/validCheck")
-    @ValidateAnnotation
+    @LogHandleAnnotation
     public Object validCheck(@RequestBody @Valid PayReq payReq) {
         log.info("validCheck");
 

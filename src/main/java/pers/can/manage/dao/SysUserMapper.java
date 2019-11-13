@@ -61,4 +61,13 @@ public interface SysUserMapper {
      * @return list
      */
     List<SysUser> listPageUser(PageUserQueryReq pageUserQueryReq);
+
+    /**
+     * 更新用户状态
+     *
+     * @param userId 用户id
+     * @param status 用户状态
+     * @return 更新记录数
+     */
+    int updateUserStatus(@Param("userId") Long userId, @Param("status") String status);
 }

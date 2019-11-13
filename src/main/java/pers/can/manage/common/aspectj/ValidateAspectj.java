@@ -22,10 +22,10 @@ import org.springframework.stereotype.Component;
 public class ValidateAspectj {
 
     public ValidateAspectj() {
-        log.info("实例化ValidateAspectj==");
+        log.info("实例化" + this.getClass().getName() + "==");
     }
 
-    @Pointcut("execution(* pers.can.manage.web.*.controller..*(..)) && @annotation(pers.can.manage.common.annotation.ValidateAnnotation)")
+    @Pointcut("execution(* pers.can.manage.web.*.controller..*(..)) && @annotation(pers.can.manage.common.annotation.LogHandleAnnotation)")
     public void logPointCut() {
 
     }

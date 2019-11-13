@@ -84,4 +84,16 @@ public class SysUserServiceImpl implements SysUserService {
     public int insertUser(SysUser record) {
         return this.sysUserMapper.insertSelective(record);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int updateUserStatus(Long userId, String status) {
+        return this.sysUserMapper.updateUserStatus(userId, status);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int deleteUserByUserId(Long userId) {
+        return this.sysUserMapper.deleteByPrimaryKey(userId);
+    }
 }

@@ -60,4 +60,21 @@ public interface SysUserService {
      * @return 插入记录数
      */
     int insertUser(SysUser record);
+
+    /**
+     * 更新用户状态
+     *
+     * @param userId 用户id
+     * @param status 用户状态
+     * @return 更新记录数
+     */
+    int updateUserStatus(Long userId, String status);
+
+    /**
+     * 删除用户信息
+     *
+     * @param userId 用户id
+     * @return 删除记录数
+     */
+    int deleteUserByUserId(Long userId);
 }

@@ -139,4 +139,7 @@
         order by user_id desc
     </select>
 
+    <update id="updateUserStatus">
+        update  sys_user set  status = #{status} where user_id = #{userId}
+    </update>
 </mapper>
