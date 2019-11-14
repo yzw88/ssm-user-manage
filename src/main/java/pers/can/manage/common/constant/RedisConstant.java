@@ -11,5 +11,10 @@ public class RedisConstant {
     /**
      * redis中token的key
      */
-    public static final String KEY_USER_TOKEN = "user:token:";
+    public static final String KEY_USER_TOKEN = "user:info:";
+
+    /**
+     * 用户token续命的key
+     */
+    public static final String KEY_USER_LOGIN = "user:login:";
 }

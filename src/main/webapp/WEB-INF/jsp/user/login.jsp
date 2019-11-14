@@ -103,7 +103,7 @@
             window.localStorage.setItem("userInfo", userInfoJson);
 
             //从定向到主页
-            location.href = '${path}/view/user/userList';
+            location.href = '${path}/view/common/index';
         }
 
         //图形验证码回调
@@ -115,7 +115,7 @@
 
         //获取图形验证码
         function getValidCode() {
-            sendGetAjax('${path}/user/getUserValidCode', null, codeCallBack);
+            sendGetFormDateAjax('${path}/user/getUserValidCode', null, codeCallBack);
         }
 
         //调用获取图形验证码

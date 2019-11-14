@@ -34,4 +34,7 @@ public class BusinessException extends RuntimeException {
         this.msg = returnEnum.getMsg();
     }
 
+    public static void err(ResultEnum returnEnum, String msg) {
+        throw new BusinessException(returnEnum.getCode(), msg);
+    }
 }

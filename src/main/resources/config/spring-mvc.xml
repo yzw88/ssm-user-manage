@@ -53,14 +53,13 @@
             <!--拦截的请求-->
             <mvc:mapping path="/**/**"/>
             <!--放过的请求-->
-            <!--返回登录页面url-->
-            <mvc:exclude-mapping path="/view/user/login"/>
-            <!--用户主页-test-->
-            <mvc:exclude-mapping path="/view/user/index"/>
+            <!--jsp页面不拦截-->
+            <mvc:exclude-mapping path="/view/**/**"/>
             <!--用户登录接口-->
             <mvc:exclude-mapping path="/user/login"/>
             <!--获取验证码接口-->
             <mvc:exclude-mapping path="/user/getUserValidCode"/>
+            <!--定义bean-->
             <bean class="pers.can.manage.common.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
 

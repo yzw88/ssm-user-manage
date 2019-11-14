@@ -21,6 +21,7 @@ import pers.can.manage.web.user.output.UserLoginResp;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.awt.image.BufferedImage;
@@ -87,7 +88,7 @@ public class UserController {
      */
     @PostMapping("/login")
     @LogHandleAnnotation
-    public Object login(@RequestBody @Valid LoginReq loginReq, HttpServletResponse response) {
+    public Object login(@RequestBody @Valid LoginReq loginReq, HttpServletResponse response, HttpServletRequest request) {
         log.info("user login:{}", FastJsonUtil.toJson(loginReq));
 
         String code = this.redisCacheService.getValidCode(loginReq.getCodeKey());
@@ -118,6 +119,9 @@ public class UserController {
         //登录成功，把token放到请求头
         response.setHeader("Access-Control-Expose-Headers", CommonConstant.KEY_USER_TOKEN);
         response.setHeader(CommonConstant.KEY_USER_TOKEN, token);
+
+        //保存到session，由于是练习demo，暂不考虑session共享
+        request.getSession().setAttribute(CommonConstant.SESSION_USER, sysUser);
 
         UserLoginResp userLoginResp = new UserLoginResp();
         userLoginResp.setUserId(sysUser.getUserId());

@@ -141,9 +141,11 @@
 
     //删除用户
     function deleteUser(object) {
-        var userReq = {};
-        userReq.userId = object;
-        sendGetFormDateAjax("${path}/user/deleteUserByUserId", userReq, deleteUserCallBack);
+        layer.confirm('确定要删除该用户吗？', function () {
+            var userReq = {};
+            userReq.userId = object;
+            sendGetFormDateAjax("${path}/user/deleteUserByUserId", userReq, deleteUserCallBack);
+        });
     }
 
 </script>

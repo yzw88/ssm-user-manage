@@ -27,4 +27,14 @@ public class CommonConstant {
      * 初始化密码
      */
     public static final String INIT_PASSWORD = "123456";
+
+    /**
+     * 保存到session的用户信息对应的key
+     */
+    public static final String SESSION_USER = "session_user";
+
+    /**
+     * jsp页面请求前缀
+     */
+    public static final String VIEW_URL_PREFIX = "/view/";
 }
