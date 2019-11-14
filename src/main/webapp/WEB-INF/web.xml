@@ -78,4 +78,9 @@
     </filter-mapping>
     <!-- 配置过滤器end -->
 
+    <!--session配置-->
+    <session-config>
+        <!--session超时时间，30分钟-->
+        <session-timeout>30</session-timeout>
+    </session-config>
 </web-app>
