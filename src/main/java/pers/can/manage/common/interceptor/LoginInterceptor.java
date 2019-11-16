@@ -1,6 +1,7 @@
 package pers.can.manage.common.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import pers.can.manage.common.constant.CommonConstant;
@@ -13,7 +14,6 @@ import pers.can.manage.service.SysUserService;
 import pers.can.manage.util.FastJsonUtil;
 import pers.can.manage.util.JwtUtil;
 import pers.can.manage.util.RedisUtil;
-import pers.can.manage.util.StringUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -68,13 +68,13 @@ public class LoginInterceptor implements HandlerInterceptor {
         String token = request.getHeader(CommonConstant.KEY_USER_TOKEN);
         log.info("请求头部token:{}", token);
 
-        if (StringUtil.isBlank(token)) {
+        if (StringUtils.isBlank(token)) {
             BusinessException.err(ResultEnum.USER_STATUS_ERROR, "请求头token为空");
         }
 
         String tokenJson = JwtUtil.resolveToken(token);
         log.info("解析token为:{}", tokenJson);
-        if (StringUtil.isBlank(tokenJson)) {
+        if (StringUtils.isBlank(tokenJson)) {
             BusinessException.err(ResultEnum.USER_STATUS_ERROR, "解析token异常");
         }
 

@@ -55,6 +55,10 @@
             <!--放过的请求-->
             <!--jsp页面不拦截-->
             <mvc:exclude-mapping path="/view/**/**"/>
+            <!--静态页面不拦截-->
+            <mvc:exclude-mapping path="/static/**"/>
+            <!--favicon.ico不拦截-->
+            <mvc:exclude-mapping path="/favicon.ico"/>
             <!--用户登录接口-->
             <mvc:exclude-mapping path="/user/login"/>
             <!--获取验证码接口-->

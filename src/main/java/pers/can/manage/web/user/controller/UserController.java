@@ -2,6 +2,7 @@ package pers.can.manage.web.user.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pers.can.manage.common.annotation.LogHandleAnnotation;
@@ -93,7 +94,7 @@ public class UserController {
 
         String code = this.redisCacheService.getValidCode(loginReq.getCodeKey());
         log.info("用户名:username={},获取的code:={}", loginReq.getUsername(), code);
-        if (StringUtil.isEmpty(code)) {
+        if (StringUtils.isBlank(code)) {
             return ResultUtil.getResult(ResultEnum.BUSINESS_ERROR.getCode(), "验证码已过期，请重新获取");
         }
         if (!code.equalsIgnoreCase(loginReq.getImgCode())) {
@@ -168,7 +169,7 @@ public class UserController {
                 return ResultUtil.getResult(ResultEnum.PARAMETER_ERROR.getCode(), "用户id非法");
             }
 
-            if (StringUtil.isNotBlank(userEditReq.getUsername())) {
+            if (StringUtils.isNotBlank(userEditReq.getUsername())) {
                 SysUser sysUser1 = this.sysUserService.selectByUserName(userEditReq.getUsername());
                 //该用户名已其他用户使用
                 if (sysUser1 != null && !Objects.equals(sysUser.getUserId(), sysUser1.getUserId())) {

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="${path}/static/H-ui/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="${path}/static/H-ui/lib/layer/2.4/layer.js"></script>

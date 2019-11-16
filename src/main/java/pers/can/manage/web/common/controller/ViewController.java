@@ -37,7 +37,7 @@ public class ViewController {
                 log.info("用户登录已失效:url={}", urlNew);
 
                 //返回登录页面
-                return CommonConstant.USER_LOGIN_URL;
+//                return CommonConstant.USER_LOGIN_URL;
             }
 
         }

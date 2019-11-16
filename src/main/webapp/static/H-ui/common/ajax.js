@@ -4,6 +4,7 @@
         //从localStorage中获取token
         _token = window.localStorage.getItem('AuthorizationToken'),
         _contentType,
+        _baseUrl = window.document.location.href.split("/view/")[0],
         _cb;
 
     /**
@@ -54,7 +55,7 @@
                 if (result.code === 1000) {
                     layer.msg(result.message, {icon: '-1', time: 1000});
                     //从定向到登录页面
-                    top.location.href = "${path}/view/user/login";
+                    top.location.href = _baseUrl + "/view/user/login";
                     return;
                 }
                 //响应头部处理

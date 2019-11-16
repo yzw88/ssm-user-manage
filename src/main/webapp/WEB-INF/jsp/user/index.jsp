@@ -11,9 +11,14 @@
             var userInfoJson = window.localStorage.getItem('userInfo');
             //转换对象
             var userLoginResp = jQuery.parseJSON(userInfoJson);
-            var username = userLoginResp.username;
+            // var username = userLoginResp.username;
             // alert("当前登录用户:username=" + username);
-            $("#username").text("当前登录用户:" + username);
+            // $("#username").text("当前登录用户:" + username);
+
+            var curWwwPath=window.document.location.href;
+            // alert(curWwwPath);
+            var url = curWwwPath.split("/view/")[0];
+            alert(url);
         });
     </script>
 </head>

@@ -1,8 +1,8 @@
 package pers.can.manage.common.filter;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.MDC;
-import pers.can.manage.util.StringUtil;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +46,7 @@ public class LogbackFilter implements Filter {
     }
 
     private boolean insertMDC() {
-        String uniqueId = THREAD_ID + "-" + StringUtil.getRandomCharAndNum(5);
+        String uniqueId = THREAD_ID + "-" + RandomStringUtils.randomAlphanumeric(5);
         log.info("产生线程号:threadId={}", uniqueId);
         MDC.put(THREAD_ID, uniqueId);
         return true;
