@@ -40,7 +40,7 @@
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <jstl-impl.version>1.2</jstl-impl.version>
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
-        <jwt.version>6.0</jwt.version>
+        <jwt.version>7.9</jwt.version>
         <pagehelper.version>4.2.1</pagehelper.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <spring.security.version>5.2.1.RELEASE</spring.security.version>
