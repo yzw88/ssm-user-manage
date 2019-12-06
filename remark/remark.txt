@@ -14,6 +14,8 @@ $.ajax({
 
 //用户主页
 http://localhost:8080/view/user/index
+//security测试
+http://localhost:8080/security/login.html
 //登录页面
 http://localhost:8080/view/user/login
 http://localhost:8080/view/user/userList

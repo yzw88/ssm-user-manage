@@ -83,4 +83,13 @@
         <!--session超时时间，30分钟-->
         <session-timeout>30</session-timeout>
     </session-config>
+    <!--security配置-->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/security/*</url-pattern>
+    </filter-mapping>
 </web-app>

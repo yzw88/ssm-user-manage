@@ -35,6 +35,7 @@ public class LogbackFilter implements Filter {
                 + request.getServerName() + ":" + request.getServerPort() + path;
         //添加项目路径到session
         ((HttpServletRequest) request).getSession().setAttribute("path", basePath);
+        log.info("请求路径是:{}",httpServletRequest.getRequestURI());
         boolean flag = this.insertMDC();
         try {
             chain.doFilter(request, response);

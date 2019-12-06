@@ -23,6 +23,8 @@
     <!--扫描service-->
     <context:component-scan base-package="pers.can.manage.service"/>
 
+    <!--引入SpringSecurity配置-->
+    <import resource="spring-security.xml" />
     <!--引入mybatis配置-->
     <import resource="spring-mybatis.xml"/>
     <!--redis配置-->
@@ -30,5 +32,8 @@
 
     <!--全局捕获异常处理-->
     <bean class="pers.can.manage.common.exception.GlobalExceptionHandler"/>
+
+
+
 
 </beans>

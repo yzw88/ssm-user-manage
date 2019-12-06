@@ -55,6 +55,8 @@
             <!--放过的请求-->
             <!--jsp页面不拦截-->
             <mvc:exclude-mapping path="/view/**/**"/>
+            <!--security测试不拦截-->
+            <mvc:exclude-mapping path="/security/**"/>
             <!--静态页面不拦截-->
             <mvc:exclude-mapping path="/static/**"/>
             <!--favicon.ico不拦截-->
