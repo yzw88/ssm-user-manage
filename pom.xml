@@ -21,7 +21,7 @@
         <jstl.version>1.2</jstl.version>
         <javax.servlet-api.version>4.0.0</javax.servlet-api.version>
         <jfastjson.version>1.2.62</jfastjson.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <lombok.version>1.18.4</lombok.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <aspectjweaver.version>1.8.9</aspectjweaver.version>
