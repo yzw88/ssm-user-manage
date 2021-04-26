@@ -29,7 +29,7 @@
         <pagehelper.version>5.1.2</pagehelper.version>
         <cglib.version>3.2.2</cglib.version>
         <HikariCP.version>3.4.1</HikariCP.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <commons-logging.version>1.2</commons-logging.version>
         <logback-classic.version>1.2.3</logback-classic.version>
         <logback-core.version>1.2.3</logback-core.version>
