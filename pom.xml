@@ -43,7 +43,7 @@
         <jwt.version>6.0</jwt.version>
         <pagehelper.version>4.2.1</pagehelper.version>
         <commons-lang3.version>3.7</commons-lang3.version>
-        <spring.security.version>5.2.1.RELEASE</spring.security.version>
+        <spring.security.version>5.2.10.RELEASE</spring.security.version>
     </properties>
 
     <dependencies>
